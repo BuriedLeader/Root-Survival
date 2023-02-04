@@ -1,5 +1,7 @@
+require "bullets"
 local player = {} 
 local W, H = love.graphics.getDimensions()
+local timer = 0
 
 function player.load()
     radius = 10
@@ -50,12 +52,22 @@ end
 function player.update(dt)
     player.body:setLinearVelocity(150,200)
     player_move()
+    if love.mouse.isDown(1) and timer <= 0.5 then
+        local x,y = player.body:getPosition()
+        local mx, my = cam:toWorldCoords(love.mouse.getPosition())
+        Bullets:new(x,y,mx,my,radius)
+        timer = 1
+    end
+    timer = timer - dt
+    Bullets:update(dt)
 end
 
 function player.draw()
     x,y = player.body:getPosition()
     love.graphics.setColor(0,1,0)
     love.graphics.circle("fill",x,y,radius)
+
+    Bullets:draw()
 end
 
 return player

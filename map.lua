@@ -33,3 +33,11 @@ function Map:drawForest()
     end
     love.graphics.setColor(1, 1, 1)
 end
+
+function Map:spawns()
+    local spawns = {}
+    for i,v in ipairs(map.layers["black"].objects) do
+        spawns[i] = {x = v.x, y = v.y, w = v.width, h = v.height}
+    end
+    return spawns[love.math.random(1, #spawns)]
+end
