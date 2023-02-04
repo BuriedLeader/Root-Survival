@@ -33,7 +33,7 @@ function move (letra)
 end
 
 function player_move(dt)
-    local velocidade = 150
+    --local velocidade = 150
     move_x = 0
     move_y = 0
 
@@ -59,17 +59,13 @@ function player_move(dt)
         move_y = move_y / normalize
     end
 
-    player.body:setLinearVelocity(move_x*velocidade,move_y*velocidade)
+    player.body:setLinearVelocity(move_x*player.actual_speed,move_y*player.actual_speed)
 
 end
 
 function player:update(dt)
-<<<<<<< HEAD
     player.body:setLinearVelocity(150,200)
     player_move(dt)
-=======
-    player_move()
->>>>>>> 0692baea5832432538139add9a0ba74cedb0381d
     if love.mouse.isDown(1) and timer <= 0.5 then
         local x,y = player.body:getPosition()
         local mx, my = cam:toWorldCoords(love.mouse.getPosition())
@@ -86,6 +82,9 @@ function player:update(dt)
     end
     timer = timer - dt
     Bullets:update(dt,self)
+    if player_buffs.getn ~= nil then
+        player.ActivateBuffs(player_buffs)
+    end
 end
 
 function player.draw()
@@ -106,10 +105,15 @@ function player.AddContent(content)
     end
 end
 
-function player.RemoveContent(content)
-    
-end
 
+function player.ActivateBuffs(buff_list)
+    for i, buff in buff_list do
+        if buff.activated == false then
+            buff.effect(player)
+            buff.activated = true
+        end
+    end
+end
 
 
 return player

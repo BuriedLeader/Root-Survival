@@ -6,20 +6,22 @@ buffs = {
         type = "buff"
     },
     SpeedIncrease = {
-        type = "buff"
-    }
+        type = "buff",
+        activated = false,
+        effect = function (player) player.actual_speed = player.actual_speed * 100    end
+    },
 
     BaseDamageIncrease = {
         type = "buff"
-    }
+    },
 
     SuperBaseDamageIncrease = {
         type = "buff"
-    }
+    },
 
     SuperHealthIncrease = {
         type = "buff"
-    }
+    },
 
     SuperSpeedIncrease = {
         type = "buff"
