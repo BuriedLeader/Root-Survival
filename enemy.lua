@@ -12,10 +12,11 @@ function Enemy.create(x,y,actual_wave)
         speed = math.log(actual_wave +5,2) + 100,
         hp = actual_wave*10,
         orientation = 1, -- 1 = direita, -1 = esquerda
-        
+        type = type,
+        damage = actual_wave * 2
     }
 
-    table.insert()
+    table.insert(active_enemies,new_enemy)
 end
 
 function Enemy.animate(dt)
@@ -45,6 +46,10 @@ function Enemy.remove()
 end
 
 function Enemy.beginContact()
+    
+ end
+
+ function Enemy.attack (type)
     
  end
 
