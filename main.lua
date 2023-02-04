@@ -1,4 +1,5 @@
 Camera = require('libs.camera')
+require('map')
 local W, H = love.graphics.getDimensions()
 local player = require "player"
 
@@ -26,12 +27,12 @@ end
 function love.load()
     cam = Camera()
 	cam:setFollowStyle('LOCKON')
-    MapW = 2000
-    MapH = 1000
     world = love.physics.newWorld(0,0,true)
 
-    parede[1] = objetos_staticos(200,350,200,75,world)
+    --parede[1] = objetos_staticos(200,350,200,75,world)
     player.load()
+    MapW, MapH = Map:load()
+    Map:wall(world)
     -- Player.w = 10
 end
 
@@ -67,14 +68,13 @@ function love.update(dt)
 		cam.y = H/2
 	end
 
-    if cam.x > MapW/2 then
-		cam.x = MapW/2
-	end
+    if cam.x > MapW - W/2  then
+        cam.x = MapW - W/2
+    end
 
-	if cam.y > MapH/2 then
-		cam.y = MapH/2
-	end
-
+    if cam.y > MapH - H/2 then
+        cam.y = MapH - H/2
+    end
     player.update(dt)
 end
 
@@ -89,12 +89,14 @@ end
 
 function love.draw()
     cam:attach()
+    love.graphics.setColor(1,1,1)
+    Map:draw()
     love.graphics.setColor(0.5,0.5,1)
-    love.graphics.rectangle("fill",0,0,MapW,MapH)
+    --love.graphics.rectangle("fill",0,0,2000,1000)
     love.graphics.setColor(1,0.5,0)
-    --love.graphics.circle('fill',Player.x,Player.y,Player.w)
-    -- love.graphics.rectangle('fill',20,20,20,500)
-    desenha_cenario(parede,azul_mar)
+    love.graphics.setColor(1,1,1)
+    -- Bullet:draw()
+    Map:drawForest()
     player.draw()
     cam:detach()
 end

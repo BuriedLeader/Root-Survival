@@ -3,23 +3,42 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "map.tmx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "#foresttiles": {
             "scaleInDock": 1
+        },
+        "map.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 276.5,
+                "y": 955.75
+            }
+        },
+        "map.tmx#foresttiles": {
+            "scaleInDock": 3
         }
     },
+    "last.exportedFilePath": "C:/Users/emanu/OneDrive/Área de Trabalho/ggj2023/Root-Survival/assets",
     "last.imagePath": "C:/Users/emanu/OneDrive/Área de Trabalho/ggj2023/Root-Survival/assets",
     "map.height": 70,
+    "map.lastUsedExportFilter": "Arquivos Lua (*.lua)",
+    "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "map.width": 100,
     "openFiles": [
+        "map.tmx"
     ],
     "project": "sem título.tiled-project",
     "recentFiles": [
+        "map.tmx"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
