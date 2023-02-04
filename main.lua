@@ -1,5 +1,6 @@
 Camera = require('libs.camera')
 require('map')
+require("waves")
 local W, H = love.graphics.getDimensions()
 local player = require("player")
 local enemy = require("enemy")
@@ -26,13 +27,16 @@ function objetos_staticos (x,y,w,h,mundo)
 end
 
 function love.load()
+    -- set seed for random
+    -- math.randomseed(os.time())
+    -- love.math.setRandomSeed(os.time())
     cam = Camera()
 	cam:setFollowStyle('LOCKON')
     world = love.physics.newWorld(0,0,true)
 
     --parede[1] = objetos_staticos(200,350,200,75,world)
     player.load()
-    enemy.load()
+    -- enemy.load()
     MapW, MapH = Map:load()
     Map:wall(world)
     -- Player.w = 10
@@ -77,7 +81,10 @@ function love.update(dt)
     if cam.y > MapH - H/2 then
         cam.y = MapH - H/2
     end
-    player.update(dt)
+    player:update(dt)
+    enemy.update(dt)
+
+    WavesCount:Sapwn(1,enemy,Map,dt)
 end
 
 function desenha_cenario(cenario,cor,translucidez)
@@ -99,7 +106,7 @@ function love.draw()
     love.graphics.setColor(1,1,1)
     -- Bullet:draw()
     enemy.draw()
-    Map:drawForest()
     player.draw()
+    Map:drawForest()
     cam:detach()
 end

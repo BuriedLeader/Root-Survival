@@ -22,7 +22,7 @@ function Bullets:new(pX,pY,mouseX,mouseY,pLen)
     table.insert(self, bullets)
 end
 
-function Bullets:update(dt)
+function Bullets:update(dt,player)
     for i=#self,1,-1 do
         local v = self[i]
         v.x, v.y = v.body:getPosition()
@@ -32,6 +32,21 @@ function Bullets:update(dt)
             for i,contact in ipairs(contacts) do
                 if contact:getFixtures():getUserData() == "colider" then
                     table.remove(self, i)
+                end
+                if contact:getFixtures():getUserData() == "enemy" then
+                    table.remove(self, i)
+                    local x,y = contact:getFixtures():getBody():getPosition()
+                    for i,enemy in ipairs(active_enemies) do
+                        local ex,ey = enemy.body:getPosition()
+                        if ex == x and ey == y then
+                            -- delete body
+                            enemy.hp = enemy.hp - player.hit
+                            if enemy.hp <= 0 then
+                                enemy.body:destroy()
+                                table.remove(active_enemies, i)
+                            end
+                        end
+                    end
                 end
             end
         end

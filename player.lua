@@ -10,6 +10,7 @@ function player.load()
     player.fixture = love.physics.newFixture(player.body,player.shape,1)
     player.fixture:setFriction(0)
     player.body:setFixedRotation(true)
+    player.hit = 5
 end
 
 function move (letra)
@@ -49,7 +50,7 @@ function player_move(dt)
     player.body:setLinearVelocity(move_x*velocidade,move_y*velocidade)
 end
 
-function player.update(dt)
+function player:update(dt)
     player.body:setLinearVelocity(150,200)
     player_move()
     if love.mouse.isDown(1) and timer <= 0.5 then
@@ -59,7 +60,7 @@ function player.update(dt)
         timer = 1
     end
     timer = timer - dt
-    Bullets:update(dt)
+    Bullets:update(dt,self)
 end
 
 function player.draw()

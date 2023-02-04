@@ -1,5 +1,5 @@
-Waves{
-    {onions=1,pumpkin=2,lettuce=3},
+Waves = {
+    {lettuce=3},
 }
 function waveProp(wave)
     local prob = {}
@@ -15,19 +15,33 @@ function waveProp(wave)
     return prob
 end
 
-local timer = 0
-WavesCount = {{Count = 50,time=100,timerMin=0.5,timerMax=1}}
+WavesCount = {{Count = 10,time=100,timerMin=0,timerMax=0.5,timer = 0}}
 
 function WavesCount:Sapwn(waveNumber,Enemy,Map,dt)
-    if self[waveNumber].Count > 0 and timer <= self[waveNumber].timerMin then
+    if self[waveNumber].Count > 0 and self[waveNumber].timer <= self[waveNumber].timerMin then
         local coords = Map:spawns()
         local x = love.math.random(coords.x, coords.x + coords.w)
         local y = love.math.random(coords.y, coords.y + coords.h)
-        Enemy.create(x,y,waveNumber)
-        Count = Count - 1
-        timer = timerMax
+
+        probs = waveProp(Waves[waveNumber])
+
+        n = love.math.random()
+        local type
+    
+        local old_prob = 0
+        for key, values in pairs(probs) do
+            if old_prob < n and n < values then
+                type = key
+                break
+            end
+            old_prob = values
+        end
+        Enemy.create(x,y,waveNumber,type)
+        self[waveNumber].Count = self[waveNumber].Count - 1
+        self[waveNumber].timer = self[waveNumber].timerMax
+
     end
 
-    timer = timer - dt
+    self[waveNumber].timer = self[waveNumber].timer - dt
 end
 

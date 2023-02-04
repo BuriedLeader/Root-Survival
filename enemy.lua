@@ -7,39 +7,59 @@ local player = require("player")
 active_enemies = {}
 enemy_types = {[1] = "lettuce",[2] = "pumpkin", [3] = "onion"}
 
+smart = {
+    onions=function()
+        
+    end,
+    pumpkin=function()
+        
+    end,
+    lettuce=function(self,dt)
+        px,py = player.body:getPosition()
+        
+        x = self.body:getX() - px
+        y = self.body:getY() - py
+    
+        -- normalize
 
-function Enemy.create(x,y,actual_wave)
+        if x ~= 0 and y ~= 0 then
+            local normalize = math.sqrt(x^2 + y^2)
+            x = -x / normalize
+            y = -y / normalize
+        end
 
-    -- probs = waveProp(Waves[actual_wave])
+        self.body:setLinearVelocity(x*self.speed*dt,y*self.speed*dt)
+    end
+}
 
-    -- n = love.math.random()
-    -- local type
+speeds = {
+    onions = 30000,
+    pumpkin = 20000,
+    lettuce = 20000
+}
 
-    -- local old_prob = 0
-    -- for key, values in pairs(probs) do
-    --     if old_prob < n and n < values then
-    --         type = key
-    --         break
-    --     end
-    --     old_prob = values
-    -- end
+function Enemy.create(x,y,actual_wave,type)
 
     local new_enemy = {
         x = x,
         y = y,
-        speed = math.log(actual_wave +5,2) + 100,
+        originX = x,
+        originY = y,
+        speed = math.log(actual_wave +16,2) + speeds[type] + 10*math.random(),
         hp = actual_wave*10,
         orientation = 1, -- 1 = direita, -1 = esquerda
-        type = enemy_types[type],
+        type = type,
         damage = actual_wave * 2,
         radius = 15,
         --color = 
     }
 
+    new_enemy.smart = smart[type]
     new_enemy.body = love.physics.newBody(world,new_enemy.x,new_enemy.y,'kinematic')
     new_enemy.shape = love.physics.newCircleShape(radius)
     new_enemy.fixture = love.physics.newFixture(new_enemy.body,new_enemy.shape,1)
     new_enemy.fixture:setFriction(0)
+    new_enemy.fixture:setUserData("enemy")
     new_enemy.body:setFixedRotation(true)
 
     table.insert(active_enemies,new_enemy)
@@ -54,12 +74,35 @@ function Enemy.followPlayer (dt)
 
 end
 
-function Enemy.load()
-    Enemy.create(500,500,1)
+-- function Enemy.load()
+--     Enemy.create(500,500,1,"lettuce")
+--     Enemy.create(300,300,1,"lettuce")
+-- end
+
+function distanceCalculator(x1,y1,x2,y2)
+    return math.sqrt((x2-x1)^2 + (y2-y1)^2)
 end
 
 function Enemy.update (dt)
-    
+    for i,enemy in ipairs(active_enemies) do
+        test = true
+        if distanceCalculator(enemy.body:getX(),enemy.body:getY(),enemy.originX,enemy.originY) > 100 then
+            enemy.body:setType("dynamic")
+        end
+        -- for i,wall in ipairs(Map.obj) do
+        --     if enemy.body:isTouching(wall) then
+        --         test = false
+        --         break
+        --     end
+        -- end
+        -- if test then
+        --     enemy.smart(enemy,dt)
+        --     enemy.body:setType("dynamic")
+        --     print('ok')
+        --     test = false
+        -- end
+        enemy.smart(enemy,dt)
+    end
 end
 
 function Enemy.draw ()
@@ -78,7 +121,6 @@ function Enemy.beginContact()
 end
 
 function Enemy.attack (type)
-
 end
 
 return Enemy
