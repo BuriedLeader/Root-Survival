@@ -111,6 +111,9 @@ function player.AddContent(content)
     end
 end
 
+function player.attack()
+    
+end
 
 function player.ActivateBuffs(buff_list)
     for i, buff in ipairs(buff_list) do
