@@ -1,10 +1,28 @@
+require("waves")
+
 local Enemy = {}
 
 local player = require("player")
 
 active_enemies = {}
+enemy_types = {[1] = "lettuce",[2] = "pumpkin", [3] = "onion"}
+
 
 function Enemy.create(x,y,actual_wave)
+
+    probs = waveProp(Waves[actual_wave])
+
+    n = love.math.random()
+    local type
+
+    local old_prob = 0
+    for key, values in pairs(probs) do
+        if old_prob < n and n < values then
+            type = key
+            break
+        end
+        old_prob = values
+    end
 
     new_enemy = {
         x = x,
@@ -12,8 +30,9 @@ function Enemy.create(x,y,actual_wave)
         speed = math.log(actual_wave +5,2) + 100,
         hp = actual_wave*10,
         orientation = 1, -- 1 = direita, -1 = esquerda
-        type = type,
-        damage = actual_wave * 2
+        type = enemy_types[type],
+        damage = actual_wave * 2,
+        --color = 
     }
 
     table.insert(active_enemies,new_enemy)
