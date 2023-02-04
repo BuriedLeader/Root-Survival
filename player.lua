@@ -2,6 +2,7 @@ require "bullets"
 local player = {} 
 local W, H = love.graphics.getDimensions()
 local timer = 0
+local timerStandart = 0.5
 
 player_buffs = {}
 player_items = {}
@@ -76,21 +77,12 @@ function player_move(dt)
 end
 
 function player:update(dt)
-    player.body:setLinearVelocity(150,200)
-    player_move(dt)
-    if love.mouse.isDown(1) and timer <= 0.5 then
-        local x,y = player.body:getPosition()
-        local mx, my = cam:toWorldCoords(love.mouse.getPosition())
-        Bullets:new(x,y,mx,my,player.radius)
-        timer = 1
-    end
-    if player.invencible then
-        print(player.invencible_timer)
         player.invencible_timer = player.invencible_timer - dt
         if player.invencible_timer <= 0 then
             player.invencible = false
             player.invencible_timer = 1
         end
+        timer = timerStandart
     end
     timer = timer - dt
     Bullets:update(dt,self)

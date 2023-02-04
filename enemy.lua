@@ -33,9 +33,9 @@ smart = {
 }
 
 speeds = {
-    onions = 30000,
-    pumpkin = 20000,
-    lettuce = 20000
+    onions = 3000,
+    pumpkin = 2000,
+    lettuce = 30000
 }
 
 scores = {

@@ -1,3 +1,4 @@
+require 'chest'
 Waves = {
     {lettuce=3},
     {lettuce=3},
@@ -17,11 +18,16 @@ function waveProp(wave)
 end
 storeTimer = 1
 stroeTImerStandart = 1
+difficult = 1
 
 WavesCount = {
-    {Count = 1,time=100,timerMin=0.001,timerMax=0.5,timer = 0},
-    {Count = 15,time=100,timerMin=0.001,timerMax=0.5,timer = 0},
+    {Count = 2,time=100,timerMin=0.001,timerMax=0.8,timer = 0},
+    {Count = 2,time=100,timerMin=0.001,timerMax=0.8,timer = 0},
 }
+
+for i = 1, #WavesCount do
+    WavesCount[i].Reset = WavesCount[i].Count
+end
 
 waveNumber = 1
 
@@ -53,11 +59,26 @@ function WavesCount:Spawn(Enemy,Map,dt)
             waveTimer = waveTimer - 0.25
         end
         if storeTimer > 0 then
+            -- if storeTimer == stroeTImerStandart then
+            --     Chest.create(W/2,H/2,y,waveNumber)
+            -- end
             storeTimer = storeTimer - dt
         else
             --Enemy.create(0,0,y,waveNumber,'lettuce')
             waveNumber = waveNumber + 1
             storeTimer = stroeTImerStandart
+            if waveNumber > #WavesCount then
+                waveNumber = 1
+                for i = 1, #WavesCount do
+                    WavesCount[i].Count = WavesCount[i].Reset*(2+math.log(difficult,2) + math.log(2+i%(#WavesCount),2))
+                    WavesCount[i].timerMax = WavesCount[i].timerMax - difficult*0.01
+                    print(WavesCount[i].Count)
+                end
+                for i,speed in pairs(speeds) do
+                    speeds[i] = speed + difficult*100
+                end
+                difficult = difficult + 1
+            end
             return waveNumber
         end
 
