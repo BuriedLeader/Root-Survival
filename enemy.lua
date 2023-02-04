@@ -38,6 +38,12 @@ speeds = {
     lettuce = 20000
 }
 
+scores = {
+    onions = 15,
+    pumpkin = 10,
+    lettuce = 5
+}
+
 function Enemy.create(x,y,actual_wave,type)
 
     local new_enemy = {

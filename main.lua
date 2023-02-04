@@ -92,6 +92,6 @@ function love.draw()
     chest.draw()
     Map:drawForest()
     cam:detach()
-    player.draw_life_bar()
+    player.draw_info()
     love.graphics.print(storeTimer,100,100)
 end

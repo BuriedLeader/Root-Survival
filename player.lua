@@ -14,7 +14,7 @@ function player.load()
     player.fixture:setFriction(0)
     player.body:setFixedRotation(true)
     player.base_damage = 5
-    player.actual_damage = player.base_damage
+    player.current_damage = player.base_damage
     player.base_HP = 10
     player.base_speed = 150
     player.actual_speed = player.base_speed
@@ -22,14 +22,19 @@ function player.load()
     player.life = player.base_HP
     player.invencible = false
     player.invencible_timer = 1
+    player.score = 0
 end
 
-function player.draw_life_bar()
+function player.draw_info()
     love.graphics.setColor(1,1,1)
     love.graphics.rectangle("line",5,5,155,40)
     love.graphics.setColor(1,0,0)
     local current_life = ((player.life)*150)/player.base_HP
     love.graphics.rectangle("fill",5,5,current_life+5,40)
+    love.graphics.setColor(1,1,1)
+    love.graphics.rectangle('fill',45,50,25,25)
+    love.graphics.setColor(0.8,0,0.5)
+    love.graphics.print(player.score, 50,50)
 end
 
 function move (letra)
