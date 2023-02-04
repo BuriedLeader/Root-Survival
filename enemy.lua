@@ -49,7 +49,7 @@ function Enemy.create(x,y,actual_wave,type)
         hp = actual_wave*10,
         orientation = 1, -- 1 = direita, -1 = esquerda
         type = type,
-        damage = actual_wave * 2,
+        damage = actual_wave * actual_wave/2 + 3,
         radius = 15,
         --color = 
     }
@@ -86,21 +86,24 @@ end
 function Enemy.update (dt)
     for i,enemy in ipairs(active_enemies) do
         test = true
-        if distanceCalculator(enemy.body:getX(),enemy.body:getY(),enemy.originX,enemy.originY) > 100 then
+        if distanceCalculator(enemy.body:getX(),enemy.body:getY(),enemy.originX,enemy.originY) > 200 then
             enemy.body:setType("dynamic")
         end
-        -- for i,wall in ipairs(Map.obj) do
-        --     if enemy.body:isTouching(wall) then
-        --         test = false
-        --         break
-        --     end
-        -- end
-        -- if test then
-        --     enemy.smart(enemy,dt)
-        --     enemy.body:setType("dynamic")
-        --     print('ok')
-        --     test = false
-        -- end
+
+        contacts = enemy.body:getContacts()
+        if contacts then
+            for i,contact in ipairs(contacts) do
+                if player.life <= 0 then
+                    love.event.quit()
+                end
+                if contact:getFixtures():getUserData() == "player" and not player.invencible then
+                    player.life = player.life - enemy.damage
+                    --table.remove(active_enemies,i)
+                    player.invencible = true
+                end
+            end
+        end
+
         enemy.smart(enemy,dt)
     end
 end
