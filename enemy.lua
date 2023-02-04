@@ -69,11 +69,6 @@ function Enemy.animate(dt)
 
 end
 
-function Enemy.followPlayer (dt)
-    player_x,player_y = player.body:getPosition()
-
-end
-
 -- function Enemy.load()
 --     Enemy.create(500,500,1,"lettuce")
 --     Enemy.create(300,300,1,"lettuce")

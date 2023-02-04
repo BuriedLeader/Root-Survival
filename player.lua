@@ -3,8 +3,8 @@ local player = {}
 local W, H = love.graphics.getDimensions()
 local timer = 0
 
-local player_buffs = {}
-local player_items = {}
+player_buffs = {}
+player_items = {}
 
 function player.load()
     radius = 10
@@ -13,7 +13,8 @@ function player.load()
     player.fixture = love.physics.newFixture(player.body,player.shape,1)
     player.fixture:setFriction(0)
     player.body:setFixedRotation(true)
-    player.hit = 5
+    player.base_damage = 5
+    player.actual_damage = player.base_damage
     player.base_HP = 10
     player.actual_HP = player.base_HP
     player.base_speed = 150
@@ -58,7 +59,6 @@ function player_move(dt)
 end
 
 function player:update(dt)
-    player.body:setLinearVelocity(150,200)
     player_move()
     if love.mouse.isDown(1) and timer <= 0.5 then
         local x,y = player.body:getPosition()
@@ -74,13 +74,13 @@ function player.draw()
     x,y = player.body:getPosition()
     love.graphics.setColor(0,1,0)
     love.graphics.circle("fill",x,y,radius)
-
+    love.graphics.setColor({81/255,38/255,107/255})
     Bullets:draw()
 end
 
 function player.AddContent(content)
     if content.type == "buff" then
-        table.insert(player_buff,content)
+        table.insert(player_buffs,content)
         print("adicionei buff")
     elseif content.type == "item" then
         table.insert(player_items,content)

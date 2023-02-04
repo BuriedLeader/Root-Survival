@@ -40,7 +40,7 @@ function Bullets:update(dt,player)
                         local ex,ey = enemy.body:getPosition()
                         if ex == x and ey == y then
                             -- delete body
-                            enemy.hp = enemy.hp - player.hit
+                            enemy.hp = enemy.hp - player.actual_damage
                             if enemy.hp <= 0 then
                                 enemy.body:destroy()
                                 table.remove(active_enemies, i)
