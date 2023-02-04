@@ -50,12 +50,12 @@ function DetectPlayer(chest)
     y = chest.body:getY()
     
     local distancia = distanceCalculator(x,y,px,py)
-    if distancia <= 35 then
+    if distancia <= (player.radius + chest.radius + 5) then
         print("toquei 1")
         print(chest.content)
         player.AddContent(chest.content)
         print("toquei 2")
-    elseif distancia > 36 and distancia < 40 and chest.state == "closed" then 
+    elseif distancia > (player.radius + chest.radius + 6) and distancia < (player.radius + chest.radius + 10) and chest.state == "closed" then 
         chest.state = "opened"
         print("abri")
     end

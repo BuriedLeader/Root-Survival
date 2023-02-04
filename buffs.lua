@@ -8,6 +8,25 @@ buffs = {
     SpeedIncrease = {
         type = "buff"
     }
+
+    BaseDamageIncrease = {
+        type = "buff"
+    }
+
+    SuperBaseDamageIncrease = {
+        type = "buff"
+    }
+
+    SuperHealthIncrease = {
+        type = "buff"
+    }
+
+    SuperSpeedIncrease = {
+        type = "buff"
+    }
+
+
+
 }
 
 function AddBuff(player,buff)

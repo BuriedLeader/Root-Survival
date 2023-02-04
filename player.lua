@@ -7,9 +7,9 @@ player_buffs = {}
 player_items = {}
 
 function player.load()
-    radius = 10
+    player.radius = 10
     player.body = love.physics.newBody(world,W/2,H/2,'dynamic')
-    player.shape = love.physics.newCircleShape(radius)
+    player.shape = love.physics.newCircleShape(player.radius)
     player.fixture = love.physics.newFixture(player.body,player.shape,1)
     player.fixture:setFriction(0)
     player.body:setFixedRotation(true)
@@ -63,7 +63,7 @@ function player:update(dt)
     if love.mouse.isDown(1) and timer <= 0.5 then
         local x,y = player.body:getPosition()
         local mx, my = cam:toWorldCoords(love.mouse.getPosition())
-        Bullets:new(x,y,mx,my,radius)
+        Bullets:new(x,y,mx,my,player.radius)
         timer = 1
     end
     timer = timer - dt
@@ -73,7 +73,7 @@ end
 function player.draw()
     x,y = player.body:getPosition()
     love.graphics.setColor(0,1,0)
-    love.graphics.circle("fill",x,y,radius)
+    love.graphics.circle("fill",x,y,player.radius)
     love.graphics.setColor({81/255,38/255,107/255})
     Bullets:draw()
 end
