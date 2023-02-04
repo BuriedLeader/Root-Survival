@@ -67,7 +67,7 @@ function love.update(dt)
     chest.update(dt)
     enemy.update(dt)
 
-    WavesCount:Sapwn(1,enemy,Map,dt)
+    WavesCount:Spawn(enemy,Map,dt)
 end
 
 function desenha_cenario(cenario,cor,translucidez)
@@ -92,4 +92,6 @@ function love.draw()
     chest.draw()
     Map:drawForest()
     cam:detach()
+
+    love.graphics.print(storeTimer,100,100)
 end

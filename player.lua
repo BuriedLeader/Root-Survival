@@ -19,6 +19,10 @@ function player.load()
     player.actual_HP = player.base_HP
     player.base_speed = 150
     player.actual_speed = player.base_speed
+    player.fixture:setUserData("player")
+    player.life = 10
+    player.invencible = false
+    player.invencible_timer = 1
 end
 
 function move (letra)
@@ -56,15 +60,29 @@ function player_move(dt)
     end
 
     player.body:setLinearVelocity(move_x*velocidade,move_y*velocidade)
+
 end
 
 function player:update(dt)
+<<<<<<< HEAD
+    player.body:setLinearVelocity(150,200)
+    player_move(dt)
+=======
     player_move()
+>>>>>>> 0692baea5832432538139add9a0ba74cedb0381d
     if love.mouse.isDown(1) and timer <= 0.5 then
         local x,y = player.body:getPosition()
         local mx, my = cam:toWorldCoords(love.mouse.getPosition())
         Bullets:new(x,y,mx,my,player.radius)
         timer = 1
+    end
+    if player.invencible then
+        print(player.invencible_timer)
+        player.invencible_timer = player.invencible_timer - dt
+        if player.invencible_timer <= 0 then
+            player.invencible = false
+            player.invencible_timer = 1
+        end
     end
     timer = timer - dt
     Bullets:update(dt,self)
