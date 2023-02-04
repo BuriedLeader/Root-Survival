@@ -1,7 +1,8 @@
 Camera = require('libs.camera')
 require('map')
 local W, H = love.graphics.getDimensions()
-local player = require "player"
+local player = require("player")
+local enemy = require("enemy")
 
 local parede = {}
 
@@ -31,6 +32,7 @@ function love.load()
 
     --parede[1] = objetos_staticos(200,350,200,75,world)
     player.load()
+    enemy.load()
     MapW, MapH = Map:load()
     Map:wall(world)
     -- Player.w = 10
@@ -96,6 +98,7 @@ function love.draw()
     love.graphics.setColor(1,0.5,0)
     love.graphics.setColor(1,1,1)
     -- Bullet:draw()
+    enemy.draw()
     Map:drawForest()
     player.draw()
     cam:detach()
