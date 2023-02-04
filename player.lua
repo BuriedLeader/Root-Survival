@@ -82,7 +82,7 @@ function player:update(dt)
     end
     timer = timer - dt
     Bullets:update(dt,self)
-    if player_buffs.getn ~= nil then
+    if #player_buffs > 0 then
         player.ActivateBuffs(player_buffs)
     end
 end
@@ -98,7 +98,6 @@ end
 function player.AddContent(content)
     if content.type == "buff" then
         table.insert(player_buffs,content)
-        print("adicionei buff")
     elseif content.type == "item" then
         table.insert(player_items,content)
         print("adicionei item")
@@ -107,7 +106,7 @@ end
 
 
 function player.ActivateBuffs(buff_list)
-    for i, buff in buff_list do
+    for i, buff in ipairs(buff_list) do
         if buff.activated == false then
             buff.effect(player)
             buff.activated = true
