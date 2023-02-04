@@ -1,5 +1,5 @@
 --vamos adicionar os buffs
-require("player")
+player = require("player")
 buffs = {
 
     HealthIncrease = {
@@ -9,5 +9,13 @@ buffs = {
 
     }
 }
+
+function AddBuff(player,buff)
+    
+end
+
+function RemoveBuff(player,buff)
+    
+end
 
 return buffs

@@ -1,6 +1,14 @@
 -- vamos adicionar os itens
-items = {
+player = require("player")
 
-}
+items = {}
+
+function AddItem(player,item)
+    
+end
+
+function RemoveItem(player,item)
+    
+end
 
 return items
