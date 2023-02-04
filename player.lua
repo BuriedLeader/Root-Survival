@@ -16,13 +16,20 @@ function player.load()
     player.base_damage = 5
     player.actual_damage = player.base_damage
     player.base_HP = 10
-    player.actual_HP = player.base_HP
     player.base_speed = 150
     player.actual_speed = player.base_speed
     player.fixture:setUserData("player")
-    player.life = 10
+    player.life = player.base_HP
     player.invencible = false
     player.invencible_timer = 1
+end
+
+function player.draw_life_bar()
+    love.graphics.setColor(1,1,1)
+    love.graphics.rectangle("line",5,5,155,40)
+    love.graphics.setColor(1,0,0)
+    local current_life = ((player.life)*150)/player.base_HP
+    love.graphics.rectangle("fill",5,5,current_life+5,40)
 end
 
 function move (letra)
@@ -113,6 +120,5 @@ function player.ActivateBuffs(buff_list)
         end
     end
 end
-
 
 return player

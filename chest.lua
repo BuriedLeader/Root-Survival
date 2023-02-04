@@ -32,6 +32,7 @@ end
 
 function chest.draw()
     for i,chest in ipairs(active_chests) do
+        love.graphics.setColor({214/255,132/255,0/255})
         local x,y = chest.body:getPosition()
         love.graphics.circle("fill",x,y,15)
     end
@@ -47,7 +48,7 @@ end
 
 function DetectPlayer(chest)
     px,py = player.body:getPosition()
-        
+    
     x = chest.body:getX()
     y = chest.body:getY()
     
