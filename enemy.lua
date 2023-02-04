@@ -38,6 +38,12 @@ speeds = {
     lettuce = 30000
 }
 
+scores = {
+    onions = 15,
+    pumpkin = 10,
+    lettuce = 5
+}
+
 function Enemy.create(x,y,actual_wave,type)
 
     local new_enemy = {
@@ -56,7 +62,7 @@ function Enemy.create(x,y,actual_wave,type)
 
     new_enemy.smart = smart[type]
     new_enemy.body = love.physics.newBody(world,new_enemy.x,new_enemy.y,'kinematic')
-    new_enemy.shape = love.physics.newCircleShape(radius)
+    new_enemy.shape = love.physics.newCircleShape(new_enemy.radius)
     new_enemy.fixture = love.physics.newFixture(new_enemy.body,new_enemy.shape,1)
     new_enemy.fixture:setFriction(0)
     new_enemy.fixture:setUserData("enemy")

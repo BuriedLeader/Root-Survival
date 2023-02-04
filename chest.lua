@@ -2,7 +2,8 @@ chest = {img = love.graphics.newImage("assets/chest/teste.jpg")}
 
 chest.__index = chest
 
-require("items")
+items = require("items")
+buffs = require("buffs")
 player = require("player")
 
 active_chests = {}
@@ -14,6 +15,7 @@ function chest.create(x,y,content)
        y = y,
        content = content,
        state = "closed",
+       touched = false,
        radius = 15
     }
 
@@ -30,6 +32,7 @@ end
 
 function chest.draw()
     for i,chest in ipairs(active_chests) do
+        love.graphics.setColor({214/255,132/255,0/255})
         local x,y = chest.body:getPosition()
         love.graphics.circle("fill",x,y,15)
     end
@@ -45,19 +48,16 @@ end
 
 function DetectPlayer(chest)
     px,py = player.body:getPosition()
-        
+    
     x = chest.body:getX()
     y = chest.body:getY()
     
     local distancia = distanceCalculator(x,y,px,py)
-    if distancia <= 35 then
-        print("toquei 1")
-        print(chest.content)
+    if distancia <= (player.radius + chest.radius + 5) and chest.touched == false then
         player.AddContent(chest.content)
-        print("toquei 2")
-    elseif distancia > 36 and distancia < 40 and chest.state == "closed" then 
+        chest.touched = true
+    elseif distancia > (player.radius + chest.radius + 6) and distancia < (player.radius + chest.radius + 10) and chest.state == "closed" then 
         chest.state = "opened"
-        print("abri")
     end
 
 end
@@ -71,7 +71,7 @@ function chest.update (dt)
 end
 
 function chest.load()
-    chest.create(400,400,{type = "buff"})
+    chest.create(400,400,buffs.SpeedIncrease)
 end
 
 return chest
