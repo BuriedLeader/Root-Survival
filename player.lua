@@ -3,6 +3,9 @@ local player = {}
 local W, H = love.graphics.getDimensions()
 local timer = 0
 
+local player_buffs = {}
+local player_items = {}
+
 function player.load()
     radius = 10
     player.body = love.physics.newBody(world,W/2,H/2,'dynamic')
@@ -11,6 +14,10 @@ function player.load()
     player.fixture:setFriction(0)
     player.body:setFixedRotation(true)
     player.hit = 5
+    player.base_HP = 10
+    player.actual_HP = player.base_HP
+    player.base_speed = 150
+    player.actual_speed = player.base_speed
     player.fixture:setUserData("player")
     player.life = 10
     player.invencible = false
@@ -83,5 +90,21 @@ function player.draw()
 
     Bullets:draw()
 end
+
+function player.AddContent(content)
+    if content.type == "buff" then
+        table.insert(player_buff,content)
+        print("adicionei buff")
+    elseif content.type == "item" then
+        table.insert(player_items,content)
+        print("adicionei item")
+    end
+end
+
+function player.RemoveContent(content)
+    
+end
+
+
 
 return player
