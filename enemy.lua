@@ -106,10 +106,12 @@ function Enemy.update (dt)
 end
 
 function Enemy.draw ()
+    
     for i,enemy in ipairs(active_enemies) do
         local x,y = enemy.body:getPosition()
         love.graphics.circle("fill",x,y,enemy.radius)
     end
+
 end
 
 function Enemy.remove()
