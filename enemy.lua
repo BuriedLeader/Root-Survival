@@ -8,8 +8,34 @@ active_enemies = {}
 enemy_types = {[1] = "lettuce",[2] = "pumpkin", [3] = "onion"}
 
 smart = {
-    onions=function()
+    onions=function(self,dt)
+        self.test = self.test or false
+
+        px,py = player.body:getPosition()
         
+        x = self.body:getX() - px
+        y = self.body:getY() - py
+
+        local normalize = 1000
+    
+        if x ~= 0 and y ~= 0 then
+            normalize = math.sqrt(x^2 + y^2)
+            x = -x / normalize
+            y = -y / normalize
+        end
+
+        if normalize > 100 then
+            self.test  = true
+            self.body:setLinearVelocity(x*self.speed,y*self.speed) 
+        else
+            if self.test then
+                self.body:setLinearVelocity(x*2*self.speed,y*2*self.speed)
+                self.test = false
+            end
+        end
+        self.SaveX = px
+        self.SaveY = py
+
     end,
     pumpkin=function()
         

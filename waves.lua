@@ -1,7 +1,7 @@
 require 'chest'
 Waves = {
-    {lettuce=3},
-    {lettuce=3},
+    {onions=1},
+    {lettuce=5,onions=1},
 }
 function waveProp(wave)
     local prob = {}
@@ -21,7 +21,7 @@ stroeTImerStandart = 1
 difficult = 1
 
 WavesCount = {
-    {Count = 2,time=100,timerMin=0.001,timerMax=0.8,timer = 0},
+    {Count = 3,time=100,timerMin=0.001,timerMax=0.8,timer = 0},
     {Count = 2,time=100,timerMin=0.001,timerMax=0.8,timer = 0},
 }
 
