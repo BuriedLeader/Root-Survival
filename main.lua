@@ -52,7 +52,7 @@ function love.keypressed(key)
 end
 
 function love.keyreleased(key)
-  tela.keypressed(key)
+  tela.keyreleased(key)
 end
 
 function love.mousepressed(x,y,button)
@@ -64,6 +64,10 @@ function love.mousepressed(x,y,button)
       textbox.active = false
     end
   end
+end
+
+function love.mousereleased(x,y,button)
+  tela.mousereleased(x,y,button)
 end
 
 function goToGame()

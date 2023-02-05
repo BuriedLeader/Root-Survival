@@ -24,7 +24,7 @@ function objetos_staticos (x,y,w,h,mundo)
 end
 
 function game.load()
-    
+    love.graphics.setBackgroundColor({0/255,0/255,0})
     cam = Camera()
 	cam:setFollowStyle('LOCKON')
     world = love.physics.newWorld(0,0,true)
@@ -83,9 +83,9 @@ function game.update(dt)
         WavesCount:Spawn(enemy,Map,dt)
     end
 
-    if pause == true then
-        pause_timer = pause_timer + dt
-    end
+    
+    pause_timer = pause_timer + dt
+    
 end
 
 
@@ -117,7 +117,7 @@ function game.draw()
         love.graphics.setColor(0,0,0,0.85)
         love.graphics.rectangle('fill',0,0,W,H)
         love.graphics.setColor(1,1,1)
-        love.graphics.print('PAUSE',W/2-15,H/2-15)
+        drawCenteredText(0,0,W,H,'PAUSE')
     end
 
     if love.keyboard.isDown('tab') then
