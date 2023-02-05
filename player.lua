@@ -137,7 +137,6 @@ function player.Attack(dt)
     timer = timer - dt
 end
 
-
 function player.ActivateBuffs(buff_list)
     for i, buff in ipairs(buff_list) do
         if buff.activated == false then

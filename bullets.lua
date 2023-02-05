@@ -44,6 +44,7 @@ function Bullets:update(dt,player)
                             if enemy.hp <= 0 then
                                 enemy.body:destroy()
                                 table.remove(active_enemies, i)
+                                player.score = player.score + scores[enemy.type]
                             end
                         end
                     end

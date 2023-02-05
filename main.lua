@@ -39,35 +39,41 @@ function love.load()
     MapW, MapH = Map:load()
     Map:wall(world)
 
+    pause = false
+    pause_timer = 0
 end
 
 function love.update(dt)
-    world:update(dt)
-    if dt > 0.040 then return end
-    px ,py = player.body:getPosition()  
-    cam:update(dt)
-	cam:follow(px,py)
+    if pause == false then
+        world:update(dt)
+        if dt > 0.040 then return end
+        px ,py = player.body:getPosition()  
+        cam:update(dt)
+        cam:follow(px,py)
 
-    if cam.x < W/2 then
-		cam.x = W/2
-	end
+        if cam.x < W/2 then
+            cam.x = W/2
+        end
 
-	if cam.y < H/2 then
-		cam.y = H/2
-	end
+        if cam.y < H/2 then
+            cam.y = H/2
+        end
 
-    if cam.x > MapW - W/2  then
-        cam.x = MapW - W/2
+        if cam.x > MapW - W/2  then
+            cam.x = MapW - W/2
+        end
+
+        if cam.y > MapH - H/2 then
+            cam.y = MapH - H/2
+        end
+        player:update(dt)
+        chest.update(dt)
+        enemy.update(dt)
+
+        WavesCount:Spawn(enemy,Map,dt)
     end
 
-    if cam.y > MapH - H/2 then
-        cam.y = MapH - H/2
-    end
-    player:update(dt)
-    chest.update(dt)
-    enemy.update(dt)
-
-    WavesCount:Spawn(enemy,Map,dt)
+    pause_timer = pause_timer + dt
 end
 
 function desenha_cenario(cenario,cor,translucidez)
@@ -94,6 +100,22 @@ function love.draw()
     cam:detach()
     player.draw_info()
     love.graphics.print(storeTimer,100,100)
+    if pause then
+        love.graphics.setColor(0,0,0,0.85)
+        love.graphics.rectangle('fill',0,0,W,H)
+        love.graphics.setColor(1,1,1)
+        love.graphics.print('PAUSE',W/2-15,H/2-15)
+    end
+
+end
+
+function love.keyreleased(key)
+    
+    if key == 'escape' and pause_timer > 1 then
+        pause = not pause
+        pause_timer = 0
+    end
+
 end
 
 function love.mousereleased(x,y,button)

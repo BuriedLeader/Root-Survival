@@ -85,7 +85,7 @@ function chest.new(content)
     local nx = px + dx/distance * 100
     local ny = py + dy/distance * 100
     -- create chest
-    print(nx..","..ny)
+    -- print(nx..","..ny)
     chest.create(nx,ny,content)
 end
 

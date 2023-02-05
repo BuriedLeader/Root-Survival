@@ -70,6 +70,12 @@ scores = {
     lettuce = 5
 }
 
+colors = {
+    onions = {1,1,1},
+    pumpkin = {255/255,114/255,0/255},
+    lettuce = {0/255, 66/255,37/255}
+}
+
 function Enemy.create(x,y,actual_wave,type)
 
     local new_enemy = {
@@ -145,6 +151,7 @@ end
 function Enemy.draw ()
     
     for i,enemy in ipairs(active_enemies) do
+        love.graphics.setColor(colors[enemy.type])
         local x,y = enemy.body:getPosition()
         love.graphics.circle("fill",x,y,enemy.radius)
     end
