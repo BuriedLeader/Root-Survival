@@ -95,3 +95,9 @@ function love.draw()
     player.draw_info()
     love.graphics.print(storeTimer,100,100)
 end
+
+function love.mousereleased(x,y,button)
+    if button == 2 then
+        player.fire = not player.fire
+    end
+end

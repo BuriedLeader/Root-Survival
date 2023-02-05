@@ -8,7 +8,7 @@ items = {
     YellowBananaGun = {
         type = "item",
         damage = 5,
-        attack = RangedAttack()
+        -- attack = RangedAttack()
     },
     GreenOnionSword = {
         type = "item",
@@ -19,9 +19,7 @@ items = {
 }
 
 function RangedAttack()
-    local x,y = player.body:getPosition()
-    local mx, my = cam:toWorldCoords(love.mouse.getPosition())
-    Bullets:new(x,y,mx,my,player.radius)
+
 end
 
 
