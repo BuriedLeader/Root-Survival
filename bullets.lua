@@ -1,16 +1,16 @@
 Bullets = {}
 
 -- bullets from player on mouse direction
-Angle = 0
+
 function Bullets:new(pX,pY,mouseX,mouseY,pLen)
     local bullets = {}
     bullets.x = pX + 2*pLen*math.cos(math.atan2(mouseY - pY, mouseX - pX))
     bullets.y = pY + 2*pLen*math.sin(math.atan2(mouseY - pY, mouseX - pX))
 
-    Angle = math.atan2(mouseY - pY, mouseX - pX)
+    local angle = math.atan2(mouseY - pY, mouseX - pX)
     bullets.speed = 500
-    bullets.vx = math.cos(Angle) * bullets.speed
-    bullets.vy = math.sin(Angle) * bullets.speed
+    bullets.vx = math.cos(angle) * bullets.speed
+    bullets.vy = math.sin(angle) * bullets.speed
 
     bullets.body = love.physics.newBody(world, bullets.x, bullets.y, "dynamic")
     bullets.shape = love.physics.newCircleShape(5)
@@ -33,6 +33,7 @@ function Bullets:update(dt,player)
             for j,contact in ipairs(contacts) do
                 if contact:getFixtures():getUserData() == "colider" or contact:getFixtures():getUserData() == "chest" then
                     destruir = true
+                    break
                 end
                 if contact:getFixtures():getUserData() == "enemy" then
                     local x,y = contact:getFixtures():getBody():getPosition()
@@ -46,6 +47,8 @@ function Bullets:update(dt,player)
                                 love.audio.play(Sounds.enemy)
                                 table.remove(active_enemies, i)
                                 player.score = player.score + scores[enemy.type]
+                                destruir = true
+                                break
                             end
                         end
                     end
