@@ -30,7 +30,7 @@ function Bullets:update(dt,player)
         contacts = v.body:getContacts( )
         if contacts then
             for i,contact in ipairs(contacts) do
-                if contact:getFixtures():getUserData() == "colider" then
+                if contact:getFixtures():getUserData() == "colider" or contact:getFixtures():getUserData() == "chest" then
                     table.remove(self, i)
                 end
                 if contact:getFixtures():getUserData() == "enemy" then
