@@ -4,7 +4,6 @@ add = {name = "Player", score = 1000}
 
 addScore(add.name, add.score)
 
-
 local scores = getScores()
 
 font = love.graphics.newFont("fonts/CompassPro.ttf", 20)
@@ -12,6 +11,7 @@ font = love.graphics.newFont("fonts/CompassPro.ttf", 20)
 local w,h = love.graphics.getDimensions()
 
 function viewDraw()
+    scores = getScores()
     love.graphics.setFont(font)
     love.graphics.setColor(1,1,1,0.5)
     love.graphics.rectangle("fill", 0, 80, 300, 260)
@@ -27,6 +27,7 @@ function viewDraw()
 end
 
 function viewDrawCenter()
+    scores = getScores()
     love.graphics.setColor(0,0,0,1)
     love.graphics.rectangle("fill", 0, 0, w, h)
     love.graphics.setFont(font)

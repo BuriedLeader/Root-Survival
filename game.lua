@@ -37,6 +37,20 @@ function game.load()
 
     pause = false
     pause_timer = 0
+
+    -- load music
+    music = love.audio.newSource("assets/ggj.mp3", "stream")
+    music:setLooping(true)
+    music:setVolume(0.5)
+    music:play()
+
+    -- load gameOver sound
+    gameOverSound = love.audio.newSource("assets/gameOver.mp3", "stream")
+    gameOverSound:setLooping(false)
+    gameOverSound:setVolume(0.5)
+
+    isPlayed = false
+
 end
 
 function game.update(dt)
@@ -98,7 +112,7 @@ function game.draw()
     Map:drawForest()
     cam:detach()
     player.draw_info()
-    love.graphics.print(storeTimer,100,100)
+    --love.graphics.print(storeTimer,100,100)
     if pause then
         love.graphics.setColor(0,0,0,0.85)
         love.graphics.rectangle('fill',0,0,W,H)
@@ -111,6 +125,11 @@ function game.draw()
     end
 
     if player.dead then
+        music:stop()
+        if not isPlayed then
+            gameOverSound:play()
+            isPlayed = true
+        end
 
         if isSaveName then
             love.graphics.setColor(0,0,0,0.85)
@@ -160,15 +179,6 @@ function game.draw()
                 timerGameOver = timerGameOver - 1
             end
         end
-
-
-        -- draw scores table
-
-        --viewDrawCenter()
-
-        -- draw button to restart
-
-        
         
     end
 

@@ -43,7 +43,7 @@ function player.draw_info()
     local current_life = ((player.life)*150)/player.base_HP
     love.graphics.rectangle("fill",5,5,current_life+5,40)
     love.graphics.setColor(1,1,1)
-    love.graphics.rectangle('fill',45,50,25,25)
+    love.graphics.rectangle('fill',45,50,75,20)
     love.graphics.setColor(0.8,0,0.5)
     love.graphics.print(player.score, 50,50)
 end
