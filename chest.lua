@@ -35,6 +35,7 @@ end
 function chest.draw()
     love.graphics.setColor(1,1,1)
     for i,chest in ipairs(active_chests) do
+        print(chest.state)
         
         if chest.touched == false then
             if chest.state == "closed" then
