@@ -61,7 +61,7 @@ function WavesCount:Spawn(Enemy,Map,dt)
         end
         if storeTimer > 0 then
             if storeTimer == stroeTImerStandart then
-                chest.new(buffs.SpeedIncrease)
+                chest.new()
             end
             storeTimer = storeTimer - dt
         else
