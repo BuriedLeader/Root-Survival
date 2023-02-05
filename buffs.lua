@@ -1,7 +1,6 @@
 --vamos adicionar os buffs
 
 
-player = require("player")
 buffs = {
 
     HealthIncrease = {
@@ -37,8 +36,6 @@ buffs = {
        effect = function (player)  player.actual_speed = player.actual_speed + player.actual_speed*0.33 end
     }
 
-
-
 }
 
 buffs_rate = {
@@ -50,5 +47,16 @@ buffs_rate = {
     SuperSpeedIncrease = 30/300
 }
 
+-- select a random buff
+function selectRandomBuff()
+    local random = math.random()
+    local sum = 0
+    for k,v in pairs(buffs_rate) do
+        sum = sum + v
+        if random <= sum then
+            return k
+        end
+    end
+end
 
 return buffs

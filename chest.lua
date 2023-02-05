@@ -81,6 +81,7 @@ function chest.load()
 end
 
 function chest.new(content)
+    content = content or selectRandomBuff()
     -- get center of map
     local x,y = Map.getCenter()
     -- set 100 pixels away form player in direction of center
