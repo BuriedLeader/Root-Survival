@@ -134,7 +134,8 @@ function Enemy.update (dt)
         if contacts then
             for i,contact in ipairs(contacts) do
                 if player.life <= 0 then
-                    love.event.quit()
+                    player.dead = true
+                    addScore(player.name,player.score)
                 end
                 if contact:getFixtures():getUserData() == "player" and not player.invencible then
                     player.life = player.life - enemy.damage

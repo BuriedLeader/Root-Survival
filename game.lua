@@ -3,6 +3,7 @@ Camera = require('libs.camera')
 require('map')
 require("waves")
 require("chest")
+require('viewScores')
 local W, H = love.graphics.getDimensions()
 local player = require("player")
 local enemy = require("enemy")
@@ -39,7 +40,7 @@ function game.load()
 end
 
 function game.update(dt)
-    if pause == false then
+    if pause == false and not player.dead and not isSaveName and not viewTotalScore then
         world:update(dt)
         if dt > 0.040 then return end
         px ,py = player.body:getPosition()  
@@ -68,8 +69,11 @@ function game.update(dt)
         WavesCount:Spawn(enemy,Map,dt)
     end
 
-    pause_timer = pause_timer + dt
+    if pause == true then
+        pause_timer = pause_timer + dt
+    end
 end
+
 
 function desenha_cenario(cenario,cor,translucidez)
     love.graphics.setColor(cor,translucidez or 1)
@@ -100,6 +104,72 @@ function game.draw()
         love.graphics.rectangle('fill',0,0,W,H)
         love.graphics.setColor(1,1,1)
         love.graphics.print('PAUSE',W/2-15,H/2-15)
+    end
+
+    if love.keyboard.isDown('tab') then
+        viewDraw()
+    end
+
+    if player.dead then
+
+        if isSaveName then
+            love.graphics.setColor(0,0,0,0.85)
+            love.graphics.rectangle('fill',0,0,W,H)
+            love.graphics.setColor(1,1,1)
+            love.graphics.rectangle('fill',
+                textbox.x, textbox.y,
+                textbox.width, textbox.height)
+        
+            love.graphics.printf(textbox.text,
+                textbox.x, textbox.y,
+                textbox.width, 'left')
+            love.graphics.print('Press Enter to save your score',W/2-font:getWidth('Press Enter to save your score')/2,H/2-font:getHeight()/2+font:getHeight()*2)
+            love.graphics.setColor(0,0,0)
+            love.graphics.print(textbox.text,W/2-font:getWidth(textbox.text)/2,H/2-font:getHeight()/2+font:getHeight()*3)
+            love.graphics.setColor(1,1,1)
+        else
+            love.graphics.setColor(0,0,0,1)
+            love.graphics.rectangle('fill',0,0,W,H)
+            love.graphics.setColor(1,1,1)
+            -- cemtralize text Game Over in screen
+            love.graphics.print('Game Over',W/2-font:getWidth('Game Over')/2,H/2-font:getHeight()/2)
+            -- draw score on next line
+    
+            love.graphics.print('Score: '..player.score,W/2-font:getWidth('Score: '..player.score)/2,H/2-font:getHeight()/2+font:getHeight())
+            
+            if love.keyboard.isDown('return') or love.keyboard.isDown('space') then
+                isSaveName = true
+            end
+        end
+
+        if isSaveName and love.keyboard.isDown('return') and timerGameOver < 0 and not viewTotalScore  then
+            player.name = textbox.text
+            addScore(player.name,player.score)
+            saveScores()
+            viewTotalScore = true
+            timerGameOver = 120
+        elseif isSaveName  then
+            timerGameOver = timerGameOver - 1
+        end
+
+        if viewTotalScore then
+            viewDrawCenter()
+            if timerGameOver < 0 and (love.keyboard.isDown('return') or love.keyboard.isDown('space'))  then
+                love.event.quit('restart')
+            else
+                timerGameOver = timerGameOver - 1
+            end
+        end
+
+
+        -- draw scores table
+
+        --viewDrawCenter()
+
+        -- draw button to restart
+
+        
+        
     end
 
 end

@@ -32,6 +32,8 @@ function player.load()
     player.AddContent(items.YellowBananaGun)
     player.AddContent(items.GreenOnionSword)
     player.fire = true
+    player.dead = false
+    player.name = "Player one"
 end
 
 function player.draw_info()

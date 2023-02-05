@@ -1,6 +1,10 @@
 local menu = require "menu"
 local game = require "game"
+require "scores"
 local tela = menu
+
+font = love.graphics.newFont("fonts/CompassPro.ttf", 20)
+love.graphics.setFont(font)
 
 roxo = {81/255,38/255,107/255}
 
@@ -53,9 +57,24 @@ end
 
 function love.mousepressed(x,y,button)
   tela.mousepressed(x, y, button)
+  if isSaveName then
+    if verify_region(x,y,textbox.x,textbox.y,textbox.width,textbox.height) then
+        textbox.active = true
+    else
+      textbox.active = false
+    end
+  end
 end
 
 function goToGame()
   game.load()
   tela = game
+end
+
+function love.textinput (text)
+    if isSaveName then
+        if textbox.active then
+            textbox.text = textbox.text .. text
+        end
+    end
 end
