@@ -34,7 +34,7 @@ function love.load()
     world = love.physics.newWorld(0,0,true)
 
     player.load()
-    chest.load()
+    --chest.load()
     
     MapW, MapH = Map:load()
     Map:wall(world)

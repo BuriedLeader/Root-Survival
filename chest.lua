@@ -74,4 +74,19 @@ function chest.load()
     chest.create(400,400,buffs.SpeedIncrease)
 end
 
+function chest.new(content)
+    -- get center of map
+    local x,y = Map.getCenter()
+    -- set 100 pixels away form player in direction of center
+    local px,py = player.body:getPosition()
+    local dx = x - px
+    local dy = y - py
+    local distance = math.sqrt(dx*dx + dy*dy)
+    local nx = px + dx/distance * 100
+    local ny = py + dy/distance * 100
+    -- create chest
+    print(nx..","..ny)
+    chest.create(nx,ny,content)
+end
+
 return chest

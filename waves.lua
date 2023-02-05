@@ -1,6 +1,7 @@
 require 'chest'
+--require 'buffs'
 Waves = {
-    {onions=1},
+    {onions=3},
     {lettuce=5,onions=1},
 }
 function waveProp(wave)
@@ -59,9 +60,9 @@ function WavesCount:Spawn(Enemy,Map,dt)
             waveTimer = waveTimer - 0.25
         end
         if storeTimer > 0 then
-            -- if storeTimer == stroeTImerStandart then
-            --     Chest.create(W/2,H/2,y,waveNumber)
-            -- end
+            if storeTimer == stroeTImerStandart then
+                chest.new(buffs.SpeedIncrease)
+            end
             storeTimer = storeTimer - dt
         else
             --Enemy.create(0,0,y,waveNumber,'lettuce')

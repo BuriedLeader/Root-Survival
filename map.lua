@@ -7,6 +7,10 @@ function Map:load()
     return map.width*map.tilewidth, map.height*map.tileheight
 end
 
+function Map:getCenter()
+    return map.width*map.tilewidth/2, map.height*map.tileheight/2
+end
+
 function Map:wall()
     for i,v in ipairs(map.layers["colider"].objects) do
         Map.obj = {}
