@@ -1,21 +1,29 @@
 -- vamos adicionar os itens
-player = require("player")
+local player = require("player")
+
+
 
 items = {
 
-    GreenShot = {
-        damage = 5
+    YellowBananaGun = {
+        type = "item",
+        damage = 5,
+        attack = RangedAttack()
     },
-    GreenSword = {
+    GreenOnionSword = {
+        type = "item",
         damage = 10
     }
 
 
 }
 
-function shot(img,damage,x,y,size)
-    
+function RangedAttack()
+    local x,y = player.body:getPosition()
+    local mx, my = cam:toWorldCoords(love.mouse.getPosition())
+    Bullets:new(x,y,mx,my,player.radius)
 end
+
 
 function MeleeAtack(img_list,damage,x,y,size)
     

@@ -1,4 +1,6 @@
 require "bullets"
+
+
 local player = {} 
 local W, H = love.graphics.getDimensions()
 local timer = 0
@@ -25,6 +27,11 @@ function player.load()
     player.invencible_timer = 1
     player.score = 0
     player.radius = 10
+    player.equipped_weapon = 1 --número da arma equipada na lista de items
+    player.current_weapon = 0 -- valor somente para deixar a variável criada
+    player.AddContent(items.YellowBananaGun)
+    player.AddContent(items.GreenOnionSword)
+    player.fire = true
 end
 
 function player.draw_info()
@@ -79,18 +86,7 @@ end
 
 function player:update(dt)
     player_move(dt)
-    if love.mouse.isDown(1) and timer <= 0.01 then
-        local x,y = player.body:getPosition()
-        local mx, my = cam:toWorldCoords(love.mouse.getPosition())
-        Bullets:new(x,y,mx,my,player.radius)
-        player.invencible_timer = player.invencible_timer - dt
-        if player.invencible_timer <= 0 then
-            player.invencible = false
-            player.invencible_timer = 1
-        end
-        timer = timerStandart
-    end
-    timer = timer - dt
+    player.Attack(dt)
     if #player_buffs > 0 then
         player.ActivateBuffs(player_buffs)
     end
@@ -110,13 +106,37 @@ function player.AddContent(content)
         table.insert(player_buffs,content)
     elseif content.type == "item" then
         table.insert(player_items,content)
+         if #player_items == 0 then
+            player.current_weapon = player_items[player.equipped_weapon]
+         end
         print("adicionei item")
     end
 end
 
-function player.attack()
-    
+function player.Attack(dt)
+
+    if player.fire then
+        if love.mouse.isDown(1) and timer <= 0.01 then
+            local x,y = player.body:getPosition()
+            local mx, my = cam:toWorldCoords(love.mouse.getPosition())
+            Bullets:new(x,y,mx,my,player.radius)
+            player.invencible_timer = player.invencible_timer - dt
+            if player.invencible_timer <= 0 then
+                player.invencible = false
+                player.invencible_timer = 1
+            end
+            timer = timerStandart
+        end
+    else 
+        
+    end
+
+    if love.mouse.isDown(2) and timer <=0.5 then
+        player.fire = not player.fire
+    end
+    timer = timer - dt
 end
+
 
 function player.ActivateBuffs(buff_list)
     for i, buff in ipairs(buff_list) do

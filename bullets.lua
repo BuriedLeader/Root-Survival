@@ -2,7 +2,7 @@ Bullets = {}
 
 -- bullets from player on mouse direction
 
-function Bullets:new(pX,pY,mouseX,mouseY,pLen)
+function Bullets:new(pX,pY,mouseX,mouseY,pLenz)
     local bullets = {}
     bullets.x = pX + 2*pLen*math.cos(math.atan2(mouseY - pY, mouseX - pX))
     bullets.y = pY + 2*pLen*math.sin(math.atan2(mouseY - pY, mouseX - pX))
@@ -40,13 +40,10 @@ function Bullets:update(dt,player)
                         local ex,ey = enemy.body:getPosition()
                         if ex == x and ey == y then
                             -- delete body
-                            enemy.hp = enemy.hp - player.current_damage
+                            enemy.hp = enemy.hp - (player.actual_damage + player.current_weapon.damage)
                             if enemy.hp <= 0 then
                                 enemy.body:destroy()
                                 table.remove(active_enemies, i)
-                                
-                                player.score = player.score + scores[enemy.type]
-                                
                             end
                         end
                     end
