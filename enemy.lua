@@ -65,9 +65,9 @@ speeds = {
 }
 
 imgs = {
-    onions = love.graphics.newImage("assets/enemies/onion.png"),
-    pumpkin = love.graphics.newImage("assets/enemies/pumpkin.png"),
-    lettuce = love.graphics.newImage("assets/enemies/lettuce.png")
+    onions = love.graphics.newImage("assets/enemies/onion/onion.png"),
+    pumpkin = love.graphics.newImage("assets/enemies/pumpkin/pumpkin.png"),
+    lettuce = love.graphics.newImage("assets/enemies/lettuce/lettuce.png")
 }
 
 scores = {
