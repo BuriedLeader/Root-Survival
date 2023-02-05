@@ -32,9 +32,11 @@ end
 
 function chest.draw()
     for i,chest in ipairs(active_chests) do
-        love.graphics.setColor({214/255,132/255,0/255})
-        local x,y = chest.body:getPosition()
-        love.graphics.circle("fill",x,y,15)
+        if chest.touched == false then
+            love.graphics.setColor({214/255,132/255,0/255})
+            local x,y = chest.body:getPosition()
+            love.graphics.circle("fill",x,y,15)
+        end
     end
 end
 
@@ -47,17 +49,21 @@ function chest:open()
 end
 
 function DetectPlayer(chest)
-    px,py = player.body:getPosition()
-    
-    x = chest.body:getX()
-    y = chest.body:getY()
-    
-    local distancia = distanceCalculator(x,y,px,py)
-    if distancia <= (player.radius + chest.radius + 5) and chest.touched == false then
-        player.AddContent(chest.content)
-        chest.touched = true
-    elseif distancia > (player.radius + chest.radius + 6) and distancia < (player.radius + chest.radius + 10) and chest.state == "closed" then 
-        chest.state = "opened"
+    if chest.touched == false then   
+        px,py = player.body:getPosition()
+        
+        x = chest.body:getX()
+        y = chest.body:getY()
+        
+        local distancia = distanceCalculator(x,y,px,py)
+        if distancia <= (player.radius + chest.radius + 5) and chest.touched == false then
+            player.AddContent(chest.content)
+            chest.touched = true
+            chest.body:destroy()
+            
+        elseif distancia > (player.radius + chest.radius + 6) and distancia < (player.radius + chest.radius + 10) and chest.state == "closed" then 
+            chest.state = "opened"
+        end
     end
 
 end
