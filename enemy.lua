@@ -117,6 +117,13 @@ function Enemy.update (dt)
             enemy.body:setType("dynamic")
         end
 
+        player.invencible_timer = player.invencible_timer - dt
+
+        if player.invencible_timer <= 0 then
+            player.invencible = false
+            player.invencible_timer = 1
+        end
+
         contacts = enemy.body:getContacts()
         if contacts then
             for i,contact in ipairs(contacts) do
