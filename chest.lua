@@ -1,4 +1,4 @@
-chest = {img = love.graphics.newImage("assets/chest/teste.jpg")}
+chest = {}
 
 chest.__index = chest
 
@@ -16,7 +16,9 @@ function chest.create(x,y,content)
        content = content,
        state = "closed",
        touched = false,
-       radius = 15
+       radius = 15,
+       opened_img = love.graphics.newImage("assets/chest/opened_chest.png"),
+       closed_img = love.graphics.newImage("assets/chest/closed_chest.png")
     }
 
     new_chest.body = love.physics.newBody(world,new_chest.x,new_chest.y,'static')
@@ -33,9 +35,17 @@ end
 function chest.draw()
     for i,chest in ipairs(active_chests) do
         if chest.touched == false then
-            love.graphics.setColor({214/255,132/255,0/255})
-            local x,y = chest.body:getPosition()
-            love.graphics.circle("fill",x,y,15)
+            if chest.state == "closed" then
+                -- love.graphics.setColor({214/255,132/255,0/255})
+                local x,y = chest.body:getPosition()
+                -- love.graphics.circle("fill",x,y,15)
+                love.graphics.draw(chest.closed_img,x,y,0,0.5,0.5,chest.closed_img:getWidth()/2,chest.closed_img:getHeight()/2)
+            else
+                -- love.graphics.setColor({214/255,132/255,0/255})
+                local x,y = chest.body:getPosition()
+                -- love.graphics.circle("fill",x,y,15)
+                love.graphics.draw(chest.opened_img,x,y,0,0.5,0.5,chest.opened_img:getWidth()/2,chest.opened_img:getHeight()/2)
+            end
         end
     end
 end

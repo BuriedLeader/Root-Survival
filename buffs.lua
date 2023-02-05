@@ -39,6 +39,7 @@ buffs = {
     SuperSpeedIncrease = {
        type = "buff",
        activated = false,
+       img = love.graphics.newImage("assets/buffs/super_speed.png"),
        effect = function (player)  player.actual_speed = player.actual_speed*1.3 end
     }
 
