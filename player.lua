@@ -24,6 +24,7 @@ function player.load()
     player.invencible = false
     player.invencible_timer = 1
     player.score = 0
+    player.radius = 10
 end
 
 function player.draw_info()
@@ -77,6 +78,11 @@ function player_move(dt)
 end
 
 function player:update(dt)
+    player_move(dt)
+    if love.mouse.isDown(1) and timer <= 0.01 then
+        local x,y = player.body:getPosition()
+        local mx, my = cam:toWorldCoords(love.mouse.getPosition())
+        Bullets:new(x,y,mx,my,player.radius)
         player.invencible_timer = player.invencible_timer - dt
         if player.invencible_timer <= 0 then
             player.invencible = false
@@ -85,10 +91,10 @@ function player:update(dt)
         timer = timerStandart
     end
     timer = timer - dt
-    Bullets:update(dt,self)
     if #player_buffs > 0 then
         player.ActivateBuffs(player_buffs)
     end
+    Bullets:update(dt,self)
 end
 
 function player.draw()

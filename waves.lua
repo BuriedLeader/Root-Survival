@@ -72,10 +72,9 @@ function WavesCount:Spawn(Enemy,Map,dt)
                 for i = 1, #WavesCount do
                     WavesCount[i].Count = WavesCount[i].Reset*(2+math.log(difficult,2) + math.log(2+i%(#WavesCount),2))
                     WavesCount[i].timerMax = WavesCount[i].timerMax - difficult*0.01
-                    print(WavesCount[i].Count)
                 end
                 for i,speed in pairs(speeds) do
-                    speeds[i] = speed + difficult*100
+                    speeds[i] = speed + difficult*10
                 end
                 difficult = difficult + 1
             end

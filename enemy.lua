@@ -28,14 +28,14 @@ smart = {
             y = -y / normalize
         end
 
-        self.body:setLinearVelocity(x*self.speed*dt,y*self.speed*dt)
+        self.body:setLinearVelocity(x*self.speed,y*self.speed)
     end
 }
 
 speeds = {
-    onions = 3000,
-    pumpkin = 2000,
-    lettuce = 30000
+    onions = 50,
+    pumpkin = 50,
+    lettuce = 50
 }
 
 scores = {
