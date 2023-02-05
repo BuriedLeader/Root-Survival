@@ -1,8 +1,15 @@
 require 'chest'
 --require 'buffs'
 Waves = {
-    {onions=3},
-    {lettuce=5,onions=1},
+    {lettuce=1},
+    {onions=1},
+    {lettuce=1,onions=2},
+    {lettuce=5,onions=5,pumpkin=1},
+    {onions=1,lettuce=1,pumpkin=1},
+    {lettuce=5,pumpkin=1},
+    {onions=5,pumpkin=1},
+    {lettuce=5,onions=5,pumpkin=1},
+    {lettuce=1,onions=1,pumpkin=5},
 }
 function waveProp(wave)
     local prob = {}
@@ -22,8 +29,15 @@ stroeTImerStandart = 1
 difficult = 1
 
 WavesCount = {
-    {Count = 3,time=100,timerMin=0.001,timerMax=0.8,timer = 0},
-    {Count = 2,time=100,timerMin=0.001,timerMax=0.8,timer = 0},
+    {Count = 5,time=100,timerMin=0.001,timerMax=0.9,timer = 0},
+    {Count = 5,time=100,timerMin=0.001,timerMax=0.9,timer = 0},
+    {Count = 10,time=100,timerMin=0.001,timerMax=0.9,timer = 0},
+    {Count = 10,time=100,timerMin=0.001,timerMax=0.8,timer = 0},
+    {Count = 10,time=100,timerMin=0.001,timerMax=0.8,timer = 0},
+    {Count = 20,time=100,timerMin=0.001,timerMax=0.8,timer = 0},
+    {Count = 20,time=100,timerMin=0.001,timerMax=0.7,timer = 0},
+    {Count = 30,time=100,timerMin=0.001,timerMax=0.7,timer = 0},
+    {Count = 30,time=100,timerMin=0.001,timerMax=0.7,timer = 0},
 }
 
 for i = 1, #WavesCount do

@@ -24,11 +24,12 @@ smart = {
             y = -y / normalize
         end
 
-        if normalize > 100 then
+        if normalize > 150 then
             self.test  = true
-            self.body:setLinearVelocity(x*self.speed,y*self.speed) 
+            self.body:setLinearVelocity(x*self.speed,y*self.speed)
         else
             if self.test then
+                self.body:setType("dynamic")
                 self.body:setLinearVelocity(x*2*self.speed,y*2*self.speed)
                 self.test = false
             end
@@ -37,8 +38,31 @@ smart = {
         self.SaveY = py
 
     end,
-    pumpkin=function()
+    pumpkin=function(self,dt)
+        self.test = self.test or false
+
+        px,py = player.body:getPosition()
         
+        x = self.body:getX() - px
+        y = self.body:getY() - py
+
+        local normalize = 1000
+    
+        if x ~= 0 and y ~= 0 then
+            normalize = math.sqrt(x^2 + y^2)
+            x = -x / normalize
+            y = -y / normalize
+        end
+        if normalize > 60 then
+            self.body:setLinearVelocity(x*self.speed+10,y*self.speed*10)
+        elseif normalize > 50 and normalize < 60 then
+            self.body:setLinearVelocity(x*self.speed+10*math.random(-1,1),y*self.speed*10*math.random(-1,1)) 
+        else
+            self.body:setLinearVelocity(x*self.speed,y*self.speed)
+        end
+        self.SaveX = px
+        self.SaveY = py
+
     end,
     lettuce=function(self,dt)
         px,py = player.body:getPosition()
@@ -59,9 +83,9 @@ smart = {
 }
 
 speeds = {
-    onions = 50,
-    pumpkin = 50,
-    lettuce = 50
+    onions = 70,
+    pumpkin = 65,
+    lettuce = 100,
 }
 
 imgs = {
@@ -76,10 +100,22 @@ scores = {
     lettuce = 5
 }
 
+life = {
+    onions = 20,
+    pumpkin = 30,
+    lettuce = 10,
+}
+
 colors = {
     onions = {1,1,1},
     pumpkin = {255/255,114/255,0/255},
     lettuce = {0/255, 66/255,37/255}
+}
+
+radius = {
+    onions = 30,
+    pumpkin = 65,
+    lettuce = 45
 }
 
 function Enemy.create(x,y,actual_wave,type)
@@ -90,11 +126,11 @@ function Enemy.create(x,y,actual_wave,type)
         originX = x,
         originY = y,
         speed = math.log(actual_wave +16,2) + speeds[type] + 10*math.random(),
-        hp = actual_wave*10,
+        hp = (actual_wave+1)/2 + life[type],
         orientation = 1, -- 1 = direita, -1 = esquerda
         type = type,
         damage = actual_wave * actual_wave/2 + 3,
-        radius = 15,
+        radius = radius[type],
         --color = 
     }
 
@@ -125,7 +161,7 @@ end
 function Enemy.update (dt)
     for i,enemy in ipairs(active_enemies) do
         test = true
-        if distanceCalculator(enemy.body:getX(),enemy.body:getY(),enemy.originX,enemy.originY) > 200 then
+        if distanceCalculator(enemy.body:getX(),enemy.body:getY(),enemy.originX,enemy.originY) > 120 then
             enemy.body:setType("dynamic")
         end
 
@@ -159,10 +195,10 @@ end
 function Enemy.draw ()
     
     for i,enemy in ipairs(active_enemies) do
-        love.graphics.setColor(colors[enemy.type])
+        love.graphics.setColor(1,1,1,1)
         local x,y = enemy.body:getPosition()
         love.graphics.draw(imgs[enemy.type],x,y,0,1,1,imgs[enemy.type]:getWidth()/2,imgs[enemy.type]:getHeight()/2)
-        love.graphics.circle("fill",x,y,enemy.radius)
+        --love.graphics.circle("fill",x,y,enemy.radius)
     end
 
 end

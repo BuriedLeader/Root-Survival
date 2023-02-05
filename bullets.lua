@@ -7,7 +7,7 @@ function Bullets:new(pX,pY,mouseX,mouseY,pLen)
     bullets.x = pX + 2*pLen*math.cos(math.atan2(mouseY - pY, mouseX - pX))
     bullets.y = pY + 2*pLen*math.sin(math.atan2(mouseY - pY, mouseX - pX))
 
-    angle = math.atan2(mouseY - pY, mouseX - pX)
+    Angle = math.atan2(mouseY - pY, mouseX - pX)
     bullets.speed = 500
     bullets.vx = math.cos(angle) * bullets.speed
     bullets.vy = math.sin(angle) * bullets.speed
@@ -24,17 +24,17 @@ end
 
 function Bullets:update(dt,player)
     for i=#self,1,-1 do
+        local destruir = false
         local v = self[i]
         v.x, v.y = v.body:getPosition()
         -- if colider on bullet then remove bullet
         contacts = v.body:getContacts( )
         if contacts then
-            for i,contact in ipairs(contacts) do
+            for j,contact in ipairs(contacts) do
                 if contact:getFixtures():getUserData() == "colider" or contact:getFixtures():getUserData() == "chest" then
-                    table.remove(self, i)
+                    destruir = true
                 end
                 if contact:getFixtures():getUserData() == "enemy" then
-                    table.remove(self, i)
                     local x,y = contact:getFixtures():getBody():getPosition()
                     for i,enemy in ipairs(active_enemies) do
                         local ex,ey = enemy.body:getPosition()
@@ -51,6 +51,10 @@ function Bullets:update(dt,player)
                     end
                 end
             end
+        end
+        if destruir then
+            v.body:destroy()
+            table.remove(self, i)
         end
 
     end
