@@ -92,6 +92,8 @@ function player_move(dt)
 
 end
 
+Angle = 0
+
 function player:update(dt)
 
     player_move(dt)
@@ -100,7 +102,8 @@ function player:update(dt)
         if love.mouse.isDown(1) and timer <= 0.01 then
             local x,y = player.body:getPosition()
             local mx, my = cam:toWorldCoords(love.mouse.getPosition())
-            Bullets:new(x,y,mx,my,player.radius)
+            Angle = math.atan2(my - x, mx - y)
+            Bullets:new(x,y,mx,my,player.radius,Angle)
             player.invencible_timer = player.invencible_timer - dt
             if player.invencible_timer <= 0 then
                 player.invencible = false
@@ -140,7 +143,7 @@ function player.draw()
     love.graphics.draw(player.img,x,y,0,0.35,0.35,player.img:getWidth()/2,player.img:getHeight()/2)
     if player.current_weapon ~= 0 then
         if player.current_weapon == player_items[1] then
-            love.graphics.draw(player.current_weapon.img,x+15,y,0,0.1,0.1,player.current_weapon.img:getWidth()/2,player.current_weapon.img:getHeight()/2)
+            love.graphics.draw(player.current_weapon.img,x+15,y,Angle,0.1,0.1,player.current_weapon.img:getWidth()/2,player.current_weapon.img:getHeight()/2)
         else
             love.graphics.draw(player.current_weapon.img,x+10,y-10,0,0.1,0.1,player.current_weapon.img:getWidth()/2,player.current_weapon.img:getHeight()/2)
         end
