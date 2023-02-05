@@ -35,6 +35,9 @@ function player.load()
     player.name = "Player one"
     player.img = love.graphics.newImage("assets/player/StandingCarrot1.png")
 
+    angle_range = 0
+    pos_x = 0
+    pos_y = 0
     if player.fire then
         player.current_weapon = player_items[1]
     else
@@ -115,7 +118,42 @@ function player:update(dt)
 
     else 
         if love.mouse.isDown(1) and timer <= 0.01 then
-            
+            local x,y = player.body:getPosition()
+            local mx, my = cam:toWorldCoords(love.mouse.getPosition())
+
+            pos_x = mx - x
+            pos_y = my - y
+
+            local normalize = math.sqrt((pos_x ^ 2) + (pos_y ^ 2))
+            pos_x = (pos_x/normalize) 
+            pos_y = (pos_y/normalize) 
+
+            angle_range = math.atan2(my - y, mx - x)
+            local damage_radius = player.radius*9
+            local j = 1
+            for i,enemy in ipairs(active_enemies) do
+                local ex,ey = enemy.body:getPosition()
+                local angle = math.atan2(ex - x, ey - y)
+                local radius_e_p = math.sqrt((ex - x)^2 + (ey - y)^2)
+                if angle > angle_range - math.pi/4 and angle < angle_range + math.pi/4 and radius_e_p <= player.radius*18 then
+                    local angle_redirect
+                    enemy.hp = enemy.hp - player.current_damage
+                    angle_redirect = enemy.body:getAngle() - math.pi
+                    print(j)
+                    j = j + 1
+                    --fx = math.cos(angle_redirect) * force
+                    --fy = math.sin(angle_redirect) * force
+                    --enemy.body:applyForce(fx,fy)
+
+                    if enemy.hp <= 0 then
+                        enemy.body:destroy()
+                        love.audio.play(Sounds.enemy)
+                        table.remove(active_enemies, i)
+                        player.score = player.score + scores[enemy.type]
+                    end
+                end
+            end
+
         end
     end
 
@@ -156,6 +194,10 @@ function player.draw()
     end
     love.graphics.setColor({81/255,38/255,107/255})
     Bullets:draw()
+    love.graphics.setColor(0.5,0.5,0.5,0.5)
+    if  player.fire == false then
+        --love.graphics.arc( "fill", x + pos_x*player.radius, y + pos_y*player.radius,player.radius*8, angle_range-math.pi/4, angle_range+math.pi/4)
+    end
 end
 
 function player.AddContent(content)
