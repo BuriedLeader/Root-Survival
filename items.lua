@@ -8,24 +8,16 @@ items = {
     YellowBananaGun = {
         type = "item",
         damage = 5,
-        -- attack = RangedAttack()
+        img = love.graphics.newImage("assets/items/BananaGun/YellowBananaGun.png")
     },
     GreenOnionSword = {
         type = "item",
-        damage = 10
+        damage = 10,
+        img = love.graphics.newImage("assets/items/GreenOnionSword/GreenOnionSword.png")
     }
 
 
 }
-
-function RangedAttack()
-
-end
-
-
-function MeleeAtack(img_list,damage,x,y,size)
-    
-end
 
 
 return items

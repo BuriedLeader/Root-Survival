@@ -27,13 +27,13 @@ function player.load()
     player.invencible_timer = 1
     player.score = 0
     player.radius = 10
-    player.equipped_weapon = 1 --número da arma equipada na lista de items
     player.current_weapon = 0 -- valor somente para deixar a variável criada
     player.AddContent(items.YellowBananaGun)
     player.AddContent(items.GreenOnionSword)
     player.fire = true
     player.dead = false
     player.name = "Player one"
+    player.img = love.graphics.newImage("assets/player/StandingCarrot1.png")
 end
 
 function player.draw_info()
@@ -87,18 +87,58 @@ function player_move(dt)
 end
 
 function player:update(dt)
+
     player_move(dt)
-    player.Attack(dt)
+    
+    if player.fire then
+        if love.mouse.isDown(1) and timer <= 0.01 then
+            local x,y = player.body:getPosition()
+            local mx, my = cam:toWorldCoords(love.mouse.getPosition())
+            Bullets:new(x,y,mx,my,player.radius)
+            player.invencible_timer = player.invencible_timer - dt
+            if player.invencible_timer <= 0 then
+                player.invencible = false
+                player.invencible_timer = 1
+            end
+            timer = timerStandart
+        end
+
+    else 
+        if love.mouse.isDown(1) and timer <= 0.01 then
+            
+        end
+    end
+
+    if love.mouse.isDown(2) and timer <=1 then
+        player.fire = not player.fire
+        if player.current_weapon == player_items[1] then
+            player.current_weapon = player_items[2]
+        else
+            player.current_weapon = player_items[1]
+        end
+
+    end
+
     if #player_buffs > 0 then
         player.ActivateBuffs(player_buffs)
     end
+
     Bullets:update(dt,self)
+    timer = timer - dt
 end
 
 function player.draw()
     x,y = player.body:getPosition()
-    love.graphics.setColor(0,1,0)
-    love.graphics.circle("fill",x,y,player.radius)
+    love.graphics.setColor(1,1,1)
+    --love.graphics.circle("fill",x,y,player.radius)
+    love.graphics.draw(player.img,x,y,0,0.35,0.35,player.img:getWidth()/2,player.img:getHeight()/2)
+    if player.current_weapon ~= 0 then
+        if player.current_weapon == player_items[1] then
+            love.graphics.draw(player.current_weapon.img,x+15,y,0,0.1,0.1,player.current_weapon.img:getWidth()/2,player.current_weapon.img:getHeight()/2)
+        else
+            love.graphics.draw(player.current_weapon.img,x+10,y-10,0,0.1,0.1,player.current_weapon.img:getWidth()/2,player.current_weapon.img:getHeight()/2)
+        end
+    end
     love.graphics.setColor({81/255,38/255,107/255})
     Bullets:draw()
 end
@@ -115,29 +155,6 @@ function player.AddContent(content)
     end
 end
 
-function player.Attack(dt)
-
-    if player.fire then
-        if love.mouse.isDown(1) and timer <= 0.01 then
-            local x,y = player.body:getPosition()
-            local mx, my = cam:toWorldCoords(love.mouse.getPosition())
-            Bullets:new(x,y,mx,my,player.radius)
-            player.invencible_timer = player.invencible_timer - dt
-            if player.invencible_timer <= 0 then
-                player.invencible = false
-                player.invencible_timer = 1
-            end
-            timer = timerStandart
-        end
-    else 
-        
-    end
-
-    if love.mouse.isDown(2) and timer <=0.5 then
-        player.fire = not player.fire
-    end
-    timer = timer - dt
-end
 
 function player.ActivateBuffs(buff_list)
     for i, buff in ipairs(buff_list) do
