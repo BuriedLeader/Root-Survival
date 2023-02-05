@@ -1,13 +1,13 @@
 Bullets = {}
 
 -- bullets from player on mouse direction
-
+Angle = 0
 function Bullets:new(pX,pY,mouseX,mouseY,pLen)
     local bullets = {}
     bullets.x = pX + 2*pLen*math.cos(math.atan2(mouseY - pY, mouseX - pX))
     bullets.y = pY + 2*pLen*math.sin(math.atan2(mouseY - pY, mouseX - pX))
 
-    local angle = math.atan2(mouseY - pY, mouseX - pX)
+    Angle = math.atan2(mouseY - pY, mouseX - pX)
     bullets.speed = 500
     bullets.vx = math.cos(angle) * bullets.speed
     bullets.vy = math.sin(angle) * bullets.speed
@@ -58,6 +58,6 @@ end
 
 function Bullets:draw()
     for i,v in ipairs(self) do
-        love.graphics.circle("fill", v.x, v.y, v.shape:getRadius())
+        love.graphics.circle("fill", v.x+15, v.y, v.shape:getRadius())
     end
 end

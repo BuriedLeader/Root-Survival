@@ -64,6 +64,12 @@ speeds = {
     lettuce = 50
 }
 
+imgs = {
+    onions = love.graphics.newImage("assets/enemies/onion.png"),
+    pumpkin = love.graphics.newImage("assets/enemies/pumpkin.png"),
+    lettuce = love.graphics.newImage("assets/enemies/lettuce.png")
+}
+
 scores = {
     onions = 15,
     pumpkin = 10,
@@ -155,6 +161,7 @@ function Enemy.draw ()
     for i,enemy in ipairs(active_enemies) do
         love.graphics.setColor(colors[enemy.type])
         local x,y = enemy.body:getPosition()
+        love.graphics.draw(imgs[enemy.type],x,y,0,1,1,imgs[enemy.type]:getWidth()/2,imgs[enemy.type]:getHeight()/2)
         love.graphics.circle("fill",x,y,enemy.radius)
     end
 
