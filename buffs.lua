@@ -3,10 +3,10 @@ player = require("player")
 buffs = {
 
     HealthIncrease = {
-
+        type = "buff"
     },
     SpeedIncrease = {
-
+        type = "buff"
     }
 }
 

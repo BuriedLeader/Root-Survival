@@ -1,5 +1,0 @@
-seller = {}
-
-
-
-return seller
