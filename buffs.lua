@@ -6,7 +6,7 @@ buffs = {
     HealthIncrease = {
         type = "buff",
         activated = false,
-        img = love.graphics.newImage("assets/buffs/super_speed.png"),
+        img = love.graphics.newImage("assets/buffs/health.png"),
         effect = function (player) 
             player.base_HP = player.base_HP*1.1
             player.life = player.base_HP
@@ -15,13 +15,13 @@ buffs = {
     SpeedIncrease = {
         type = "buff",
         activated = false,
-        img = love.graphics.newImage("assets/buffs/super_speed.png"),
+        img = love.graphics.newImage("assets/buffs/speed.png"),
         effect = function (player)  player.current_speed = player.current_speed*1.1 end
     },
     DamageIncrease = {
        type = "buff",
        activated = false,
-       img = love.graphics.newImage("assets/buffs/super_damage.png"),
+       img = love.graphics.newImage("assets/buffs/damage.png"),
        effect = function (player)  player.current_damage = player.current_damage*1.1 end
     },
     SuperDamageIncrease = {
