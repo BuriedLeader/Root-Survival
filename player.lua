@@ -164,6 +164,7 @@ function player.AddContent(content)
         print("adicionei buff")
     elseif content.type == "item" then
         table.insert(player_items,content)
+        print("adicionei item")
          if #player_items == 0 then
             player.current_weapon = player_items[player.equipped_weapon]
          end

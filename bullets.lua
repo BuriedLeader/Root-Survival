@@ -1,7 +1,7 @@
 Bullets = {}
 
 -- bullets from player on mouse direction
-angle = 0
+Angle = 0
 function Bullets:new(pX,pY,mouseX,mouseY,pLen)
     local bullets = {}
     bullets.x = pX + 2*pLen*math.cos(math.atan2(mouseY - pY, mouseX - pX))
@@ -9,8 +9,8 @@ function Bullets:new(pX,pY,mouseX,mouseY,pLen)
 
     Angle = math.atan2(mouseY - pY, mouseX - pX)
     bullets.speed = 500
-    bullets.vx = math.cos(angle) * bullets.speed
-    bullets.vy = math.sin(angle) * bullets.speed
+    bullets.vx = math.cos(Angle) * bullets.speed
+    bullets.vy = math.sin(Angle) * bullets.speed
 
     bullets.body = love.physics.newBody(world, bullets.x, bullets.y, "dynamic")
     bullets.shape = love.physics.newCircleShape(5)
