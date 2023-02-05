@@ -90,8 +90,8 @@ function chest.new(content)
     local dx = x - px
     local dy = y - py
     local distance = math.sqrt(dx*dx + dy*dy)
-    local nx = px + dx/distance * 100
-    local ny = py + dy/distance * 100
+    local nx = px + dx/distance * 300
+    local ny = py + dy/distance * 300
     -- create chest
     -- print(nx..","..ny)
     chest.create(nx,ny,content)
