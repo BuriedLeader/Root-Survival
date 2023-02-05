@@ -200,6 +200,11 @@ end
 function game.mousereleased(x,y,button)
     if button == 2 then
         player.fire = not player.fire
+        if player.fire then
+            player.current_weapon = player_items[1]
+        else
+            player.current_weapon = player_items[2]
+        end
     end
 end
 

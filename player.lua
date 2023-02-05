@@ -34,6 +34,12 @@ function player.load()
     player.dead = false
     player.name = "Player one"
     player.img = love.graphics.newImage("assets/player/StandingCarrot1.png")
+
+    if player.fire then
+        player.current_weapon = player_items[1]
+    else
+        player.current_weapon = player_items[2]
+    end
 end
 
 function player.draw_info()
@@ -109,15 +115,15 @@ function player:update(dt)
         end
     end
 
-    if love.mouse.isDown(2) and timer <=1 then
-        player.fire = not player.fire
-        if player.current_weapon == player_items[1] then
-            player.current_weapon = player_items[2]
-        else
-            player.current_weapon = player_items[1]
-        end
+   -- if love.mouse.isDown(2) and timer <=1 then
+        -- player.fire = not player.fire
+        -- if player.current_weapon == player_items[1] then
+        --     player.current_weapon = player_items[2]
+        -- else
+        --     player.current_weapon = player_items[1]
+        -- end
 
-    end
+    -- end
 
     if #player_buffs > 0 then
         player.ActivateBuffs(player_buffs)
