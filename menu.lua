@@ -23,6 +23,10 @@ function menu.keyreleased(key)
     
 end
 
+function menu.mousereleased()
+    
+end
+
 function menu.mousepressed(x,y,button)
     local mx, my = love.mouse.getPosition( )
     if button == 1 and verify_region(mx,my,430,250,100,75) then
