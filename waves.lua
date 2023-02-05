@@ -68,6 +68,7 @@ function WavesCount:Spawn(Enemy,Map,dt)
             --Enemy.create(0,0,y,waveNumber,'lettuce')
             waveNumber = waveNumber + 1
             storeTimer = stroeTImerStandart
+            love.audio.play(Sounds.time)
             if waveNumber > #WavesCount then
                 waveNumber = 1
                 for i = 1, #WavesCount do

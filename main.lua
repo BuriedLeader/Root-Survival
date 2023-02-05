@@ -2,6 +2,7 @@ local menu = require "menu"
 local game = require "game"
 require "scores"
 local tela = menu
+require 'loadSounds'
 
 font = love.graphics.newFont("fonts/CompassPro.ttf", 20)
 love.graphics.setFont(font)

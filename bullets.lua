@@ -43,6 +43,7 @@ function Bullets:update(dt,player)
                             enemy.hp = enemy.hp - player.current_damage
                             if enemy.hp <= 0 then
                                 enemy.body:destroy()
+                                love.audio.play(Sounds.enemy)
                                 table.remove(active_enemies, i)
                                 player.score = player.score + scores[enemy.type]
                             end

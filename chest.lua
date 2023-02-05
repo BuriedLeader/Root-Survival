@@ -60,6 +60,7 @@ function DetectPlayer(chest)
             player.AddContent(chest.content)
             chest.touched = true
             chest.body:destroy()
+            love.audio.play(Sounds.open)
             
         elseif distancia > (player.radius + chest.radius + 6) and distancia < (player.radius + chest.radius + 10) and chest.state == "closed" then 
             chest.state = "opened"

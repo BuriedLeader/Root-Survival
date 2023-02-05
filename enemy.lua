@@ -139,6 +139,7 @@ function Enemy.update (dt)
                 end
                 if contact:getFixtures():getUserData() == "player" and not player.invencible then
                     player.life = player.life - enemy.damage
+                    love.audio.play(Sounds.hit)
                     --table.remove(active_enemies,i)
                     player.invencible = true
                 end
