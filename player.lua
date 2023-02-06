@@ -20,7 +20,7 @@ function player.load()
     player.current_damage = player.base_damage
     player.base_HP = 16
     player.base_speed = 150
-    player.actual_speed = player.base_speed
+    player.current_speed = player.base_speed
     player.fixture:setUserData("player")
     player.life = player.base_HP
     player.invencible = false
@@ -91,7 +91,7 @@ function player_move(dt)
         move_y = move_y / normalize
     end
 
-    player.body:setLinearVelocity(move_x*player.actual_speed,move_y*player.actual_speed)
+    player.body:setLinearVelocity(move_x*player.current_speed,move_y*player.current_speed)
 
 end
 
@@ -104,7 +104,7 @@ function player:update(dt)
     Angle = math.atan2(my - x, mx - y)
 
     player_move(dt)
-    
+    player.fire = true
     if player.fire then
         if love.mouse.isDown(1) and timer <= 0.01 then
             Bullets:new(x,y,mx,my,player.radius,Angle)
@@ -129,7 +129,7 @@ function player:update(dt)
             pos_y = (pos_y/normalize) 
 
             angle_range = math.atan2(my - y, mx - x)
-            local damage_radius = player.radius*9
+            local damage_radius = player.radius*10
             local j = 1
             for i,enemy in ipairs(active_enemies) do
                 local ex,ey = enemy.body:getPosition()
